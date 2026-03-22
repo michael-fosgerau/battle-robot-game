@@ -22,6 +22,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("io.rest-assured:rest-assured")
+    testImplementation("org.hamcrest:hamcrest")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 

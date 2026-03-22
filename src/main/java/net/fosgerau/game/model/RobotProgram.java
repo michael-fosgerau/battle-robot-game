@@ -29,25 +29,35 @@ public class RobotProgram {
     }
 
     public String getNextInstruction() {
-        // Find the next non-null instruction, skipping any nulls
+        // Find the next valid instruction, skipping any nulls and invalid instructions
         int searchIndex = currentInstructionIndex;
         int searchCount = 0;
         
         while (searchCount < TOTAL_SLOTS) {
-            if (instructions[searchIndex] != null) {
-                // Found a non-null instruction
+            if (instructions[searchIndex] != null && isValidInstruction(instructions[searchIndex])) {
+                // Found a valid instruction
                 String instruction = instructions[searchIndex];
                 // Move pointer to next slot for next call
                 currentInstructionIndex = (searchIndex + 1) % TOTAL_SLOTS;
                 return instruction;
             }
-            // This slot is null, move to next and continue searching
+            // This slot is invalid/null, move to next and continue searching
             searchIndex = (searchIndex + 1) % TOTAL_SLOTS;
             searchCount++;
         }
         
-        // All slots are null, return null (no-op)
+        // All slots are invalid, return null (no-op)
         return null;
+    }
+
+    private boolean isValidInstruction(String instruction) {
+        if (instruction == null) {
+            return false;
+        }
+        return instruction.equals("moveLeft") || 
+               instruction.equals("moveRight") || 
+               instruction.equals("moveUp") || 
+               instruction.equals("moveDown");
     }
 
     public void reset() {
