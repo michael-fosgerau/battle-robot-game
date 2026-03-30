@@ -42,6 +42,3 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-### Folder for AI agentic and workflow changes to be stored locally ###
-.idea/ai-progress/*
