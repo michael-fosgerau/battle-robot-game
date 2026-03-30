@@ -1,15 +1,16 @@
-/* Battle Robot Game Styles */
+/* Battle Robot Game - Dark Futuristic Styles */
 
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Courier New', monospace;
     margin: 0;
     padding: 20px;
-    background-color: #1e1e1e;
-    color: #ffffff;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #0a0a0a 100%);
+    color: #00ff00;
+    min-height: 100vh;
 }
 
 #game-container {
@@ -20,192 +21,628 @@ body {
 h1 {
     text-align: center;
     color: #00ff00;
-    margin: 0 0 20px 0;
+    margin: 0 0 30px 0;
+    font-size: 2.5em;
+    text-shadow: 0 0 20px #00ff00, 0 0 40px #00aa00;
+    letter-spacing: 3px;
 }
 
 h2, h3 {
     color: #00ff00;
-    margin: 10px 0 10px 0;
+    margin: 15px 0 10px 0;
+    text-shadow: 0 0 10px #00ff00;
 }
 
 #controls {
     text-align: center;
-    margin: 20px 0;
+    margin: 20px 0 30px 0;
     display: flex;
-    gap: 10px;
+    gap: 15px;
     justify-content: center;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 28px;
     font-size: 16px;
-    background-color: #00ff00;
+    background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
     color: #000000;
-    border: none;
-    border-radius: 4px;
+    border: 2px solid #00ff00;
+    border-radius: 0;
     cursor: pointer;
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
 }
 
 button:hover {
-    background-color: #00dd00;
+    background: linear-gradient(135deg, #00ff00 0%, #00ff00 100%);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 button:disabled {
-    background-color: #666666;
+    background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+    color: #666666;
+    border-color: #444444;
+    box-shadow: 0 0 10px rgba(100, 100, 100, 0.3);
     cursor: not-allowed;
+    text-shadow: none;
 }
 
 #stop-button {
-    background-color: #ff6600;
+    background: linear-gradient(135deg, #ff6600 0%, #ff3300 100%);
+    border-color: #ff6600;
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
 }
 
 #stop-button:hover:not(:disabled) {
-    background-color: #ff5500;
+    background: linear-gradient(135deg, #ff6600 0%, #ff6600 100%);
+    box-shadow: 0 0 30px rgba(255, 102, 0, 0.8), inset 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
-#game-board {
+/* Game Arena Container */
+.arena-wrapper {
     position: relative;
-    width: 600px;
-    height: 600px;
-    margin: 20px auto;
-    background-color: #0a0a0a;
-    border: 2px solid #00ff00;
-    display: grid;
-    grid-template-columns: repeat(30, 1fr);
-    grid-template-rows: repeat(30, 1fr);
-    gap: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto;
+    width: 100%;
+}
+
+.arena-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
 }
 
 .robot {
     position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #00ff00;
-    border: 1px solid #00aa00;
+    width: 18px;
+    height: 18px;
+    background: radial-gradient(circle at 30% 30%, #00ff00, #00aa00);
+    border: 2px solid #00ff00;
+    border-radius: 2px;
+    box-shadow:
+        0 0 10px #00ff00,
+        inset 0 0 5px rgba(255, 255, 255, 0.3);
     box-sizing: border-box;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.15s ease-in-out;
+    z-index: 10;
 }
 
 /* Programming Panel */
 #programming-panel {
-    background-color: #2d2d2d;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     border: 2px solid #00ff00;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 0;
+    padding: 25px;
     overflow-y: auto;
     max-height: 700px;
+    box-shadow:
+        0 0 30px rgba(0, 255, 0, 0.2),
+        inset 0 0 20px rgba(0, 255, 0, 0.1);
 }
 
 #available-blocks-container {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    background: rgba(0, 255, 0, 0.05);
+    padding: 12px;
+    border-left: 3px solid #00ff00;
+    min-height: 120px;
 }
 
 #available-blocks {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-items: center;
 }
 
 .block-button {
-    padding: 15px;
-    background-color: #00ff00;
+    width: 70px;
+    height: 70px;
+    padding: 0;
+    background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
     color: #000000;
-    border: 2px solid #00aa00;
-    border-radius: 4px;
+    border: 2px solid #00ff00;
+    border-radius: 0;
     cursor: move;
     font-weight: bold;
-    text-align: center;
     user-select: none;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    line-height: 1;
+    position: relative;
+    grid-column: span 2;
+}
+
+.block-button::before {
+    content: attr(data-label);
+    position: absolute;
+    bottom: -20px;
+    font-size: 10px;
+    font-weight: normal;
+    white-space: nowrap;
+    color: #00ff00;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    pointer-events: none;
 }
 
 .block-button:hover {
-    background-color: #00dd00;
+    background: linear-gradient(135deg, #00ff00 0%, #00ff00 100%);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.6), 0 0 30px rgba(0, 255, 0, 0.3);
+    transform: scale(1.1) rotate(-2deg);
+}
+
+.block-button:active {
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: scale(0.95) rotate(0deg);
+}
+
+.pagination-btn {
+    padding: 8px 12px;
+    font-size: 16px;
+    background: linear-gradient(135deg, #0066ff 0%, #0044aa 100%);
+    color: #ffffff;
+    border: 2px solid #0088ff;
+    border-radius: 0;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 136, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #0088ff 0%, #0066ff 100%);
+    box-shadow: 0 0 20px rgba(0, 136, 255, 0.6);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
 }
 
 #program-grid-container {
     flex: 1;
     display: flex;
     flex-direction: column;
+    background: rgba(0, 255, 0, 0.05);
+    padding: 15px;
+    border-left: 3px solid #00ff00;
+    gap: 10px;
 }
 
-#program-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 15px;
-    flex: 1;
-}
 
 .grid-slot {
-    min-height: 80px;
-    background-color: #1a1a1a;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0f1a 100%);
     border: 2px dashed #00ff00;
-    border-radius: 4px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     position: relative;
+    box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.grid-slot:hover {
+    box-shadow:
+        inset 0 0 10px rgba(0, 255, 0, 0.1),
+        0 0 15px rgba(0, 255, 0, 0.3);
 }
 
 .grid-slot.drag-over {
-    background-color: #003300;
+    background: linear-gradient(135deg, #003300 0%, #0a2a0a 100%);
     border-color: #00ff00;
+    box-shadow:
+        inset 0 0 20px rgba(0, 255, 0, 0.2),
+        0 0 20px rgba(0, 255, 0, 0.5);
 }
 
 .program-block {
     width: 100%;
     height: 100%;
-    padding: 8px;
-    background-color: #0066ff;
+    padding: 0;
+    background: linear-gradient(135deg, #0066ff 0%, #0044aa 100%);
     color: #ffffff;
-    border: 1px solid #0044cc;
-    border-radius: 4px;
+    border: 2px solid #0088ff;
+    border-radius: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     text-align: center;
     cursor: grab;
     user-select: none;
-    font-size: 14px;
+    box-shadow:
+        0 0 10px rgba(0, 136, 255, 0.4),
+        inset 0 0 5px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    gap: 3px;
+}
+
+.program-block .glyph {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.program-block .label {
+    font-size: 8px;
+    opacity: 0.8;
+}
+
+.program-block:hover {
+    box-shadow:
+        0 0 20px rgba(0, 136, 255, 0.6),
+        inset 0 0 10px rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
 }
 
 .program-block:active {
     cursor: grabbing;
+    box-shadow:
+        0 0 15px rgba(0, 136, 255, 0.4),
+        inset 0 0 15px rgba(0, 0, 0, 0.3);
+    transform: scale(0.95);
 }
 
 .program-block .remove-btn {
     position: absolute;
     top: -8px;
     right: -8px;
-    width: 20px;
-    height: 20px;
-    background-color: #ff0000;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #ff3300 0%, #ff0000 100%);
     color: #ffffff;
-    border: none;
+    border: 2px solid #ff0000;
     border-radius: 50%;
     cursor: pointer;
     font-size: 12px;
     padding: 0;
     line-height: 1;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    transition: all 0.3s ease;
 }
 
 .program-block .remove-btn:hover {
-    background-color: #cc0000;
+    background: linear-gradient(135deg, #ff0000 0%, #ff0000 100%);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    transform: scale(1.1);
 }
 
 #clear-program {
     width: 100%;
-    padding: 10px;
-    background-color: #ff6600;
+    padding: 12px;
+    background: linear-gradient(135deg, #ff6600 0%, #ff3300 100%);
     color: #ffffff;
     font-weight: bold;
+    border: 2px solid #ff6600;
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
 }
 
 #clear-program:hover {
-    background-color: #ff5500;
+    background: linear-gradient(135deg, #ff6600 0%, #ff6600 100%);
+    box-shadow: 0 0 30px rgba(255, 102, 0, 0.8);
 }
+
+/* Style for the border effect around the game arena */
+
+/* Reset and base styles */
+
+/* CSS Variables */
+:root {
+  --electric-border-color: #00ff00;
+  --electric-light-color: #00ffaa;
+  --gradient-color: rgba(0, 255, 0, 0.3);
+  --color-neutral-900: oklch(0.185 0 0);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: oklch(0.145 0 0);
+  color: oklch(0.985 0 0);
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Main container */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* SVG positioning */
+.svg-container {
+  position: absolute;
+}
+
+/* Card container */
+.card-container {
+  padding: 0;
+  border-radius: 24px;
+  position: relative;
+  width: 604px;
+  margin: 0 auto;
+  background: linear-gradient(
+      -30deg,
+      var(--gradient-color),
+      transparent,
+      var(--gradient-color)
+    ),
+    linear-gradient(
+      to bottom,
+      var(--color-neutral-900),
+      var(--color-neutral-900)
+    );
+}
+
+/* Inner container */
+.inner-container {
+  position: relative;
+}
+
+/* Border layers */
+.border-outer {
+  border: 2px solid rgba(0, 255, 0, 0.5);
+  border-radius: 24px;
+  padding: 0;
+}
+
+#game-board {
+  width: 600px;
+  height: 600px;
+  border-radius: 22px;
+  border: 2px solid var(--electric-border-color);
+  margin: 0;
+  background:
+    repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 19px,
+        rgba(0, 255, 0, 0.1) 19px,
+        rgba(0, 255, 0, 0.1) 20px
+    ),
+    repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 19px,
+        rgba(0, 255, 0, 0.1) 19px,
+        rgba(0, 255, 0, 0.1) 20px
+    ),
+    linear-gradient(135deg, #0a0a0a 0%, #1a0f1a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+}
+.glow-layer-1 {
+  border: 2px solid rgba(0, 255, 0, 0.6);
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  filter: url(#turbulent-displace) blur(1px);
+  pointer-events: none;
+}
+
+.glow-layer-2 {
+  border: 2px solid rgba(0, 255, 170, 0.5);
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  filter: url(#turbulent-displace) blur(4px);
+  pointer-events: none;
+}
+
+/* Overlay effects */
+.overlay-1 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px;
+  opacity: 1;
+  mix-blend-mode: overlay;
+  transform: scale(1.1);
+  filter: blur(16px);
+  background: linear-gradient(
+    -30deg,
+    white,
+    transparent 30%,
+    transparent 70%,
+    white
+  );
+}
+
+.overlay-2 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  transform: scale(1.1);
+  filter: blur(16px);
+  background: linear-gradient(
+    -30deg,
+    white,
+    transparent 30%,
+    transparent 70%,
+    white
+  );
+}
+
+/* Background glow */
+.background-glow {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px;
+  filter: blur(32px);
+  transform: scale(1.1);
+  opacity: 0.3;
+  z-index: -1;
+  background: linear-gradient(
+    -30deg,
+    rgba(0, 255, 170, 0.6),
+    transparent,
+    rgba(0, 255, 0, 0.6)
+  );
+}
+
+/* Content container */
+.content-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Content sections */
+.content-top {
+  display: flex;
+  flex-direction: column;
+  padding: 48px;
+  padding-bottom: 16px;
+  height: 100%;
+}
+
+.content-bottom {
+  display: flex;
+  flex-direction: column;
+  padding: 48px;
+  padding-top: 16px;
+}
+
+/* Scrollbar glass component */
+.scrollbar-glass {
+  background: radial-gradient(
+      47.2% 50% at 50.39% 88.37%,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    rgba(255, 255, 255, 0.04);
+  position: relative;
+  transition: background 0.3s ease;
+  border-radius: 14px;
+  width: fit-content;
+  height: fit-content;
+  padding: 8px 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.scrollbar-glass:hover {
+  background: radial-gradient(
+      47.2% 50% at 50.39% 88.37%,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0) 100%
+    ),
+    rgba(255, 255, 255, 0.08);
+}
+
+.scrollbar-glass::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1px;
+  background: linear-gradient(
+    150deg,
+    rgba(255, 255, 255, 0.48) 16.73%,
+    rgba(255, 255, 255, 0.08) 30.2%,
+    rgba(255, 255, 255, 0.08) 68.2%,
+    rgba(255, 255, 255, 0.6) 81.89%
+  );
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+/* Typography */
+.title {
+  font-size: 36px;
+  font-weight: 500;
+  margin-top: auto;
+}
+
+.description {
+  opacity: 0.5;
+}
+
+/* Divider */
+.divider {
+  margin-top: auto;
+  border: none;
+  height: 1px;
+  background-color: currentColor;
+  opacity: 0.1;
+  mask-image: linear-gradient(to right, transparent, black, transparent);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black,
+    transparent
+  );
+}
+
 
