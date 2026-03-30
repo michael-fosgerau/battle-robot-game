@@ -10,9 +10,17 @@ class GameClient {
         this.gameRunning = false;
         this.pollInterval = null;
         this.robotElement = null;
-        this.gridSize = 4;
+        this.gridSize = 4; // 4x4 memory grid
         this.program = new Array(this.gridSize * this.gridSize).fill(null);
         this.draggedBlock = null;
+
+        // Block definitions with creative glyphs and labels
+        this.blockTypes = [
+            { instruction: 'moveUp', glyph: '⬆️', label: 'Move Up', description: 'Move Up' },
+            { instruction: 'moveDown', glyph: '⬇️', label: 'Move Down', description: 'Move Down' },
+            { instruction: 'moveLeft', glyph: '⬅️', label: 'Move Left', description: 'Move Left' },
+            { instruction: 'moveRight', glyph: '➡️', label: 'Move Right', description: 'Move Right' }
+        ];
 
         this.init();
     }
@@ -24,8 +32,9 @@ class GameClient {
         this.startButton.addEventListener('click', () => this.onStartClick());
         this.stopButton.addEventListener('click', () => this.onStopClick());
         this.clearProgramBtn.addEventListener('click', () => this.clearProgram());
+
         this.initializeProgramGrid();
-        this.setupDragAndDrop();
+        this.displayAvailableBlocks();
     }
 
     initializeProgramGrid() {
@@ -42,10 +51,20 @@ class GameClient {
         this.renderProgram();
     }
 
-    setupDragAndDrop() {
-        const blockButtons = document.querySelectorAll('.block-button');
-        blockButtons.forEach(btn => {
+    displayAvailableBlocks() {
+        const container = document.getElementById('available-blocks');
+        container.innerHTML = '';
+
+        // Display all 4 movement blocks
+        this.blockTypes.forEach((blockType) => {
+            const btn = document.createElement('div');
+            btn.className = 'block-button';
+            btn.draggable = true;
+            btn.dataset.instruction = blockType.instruction;
+            btn.setAttribute('data-label', blockType.label);
+            btn.innerHTML = blockType.glyph;
             btn.addEventListener('dragstart', (e) => this.onBlockDragStart(e));
+            container.appendChild(btn);
         });
     }
 
@@ -92,8 +111,12 @@ class GameClient {
                 const block = document.createElement('div');
                 block.className = 'program-block';
                 const instruction = this.program[index];
-                const blockText = this.getBlockText(instruction);
-                block.innerHTML = `${blockText}<button class="remove-btn" data-slot="${index}">×</button>`;
+                const blockType = this.blockTypes.find(b => b.instruction === instruction);
+
+                if (blockType) {
+                    block.innerHTML = `<span class="glyph">${blockType.glyph}</span><span class="label">${blockType.label}</span><button class="remove-btn" data-slot="${index}">×</button>`;
+                }
+
                 block.addEventListener('dragstart', (e) => this.onBlockDragStart(e));
                 block.querySelector('.remove-btn').addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -102,16 +125,6 @@ class GameClient {
                 slot.appendChild(block);
             }
         });
-    }
-
-    getBlockText(instruction) {
-        const textMap = {
-            'moveLeft': '⬅️ Left',
-            'moveRight': '➡️ Right',
-            'moveUp': '⬆️ Up',
-            'moveDown': '⬇️ Down'
-        };
-        return textMap[instruction] || instruction;
     }
 
     removeBlockFromSlot(index) {
@@ -129,22 +142,20 @@ class GameClient {
     }
 
     async sendProgramToBackend() {
-        try {
-            const response = await fetch(`${this.apiBase}/program`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    instructions: this.program,
-                    currentInstructionIndex: 0
-                })
-            });
-            const result = await response.json();
-            console.log('Program sent to backend:', result);
-        } catch (error) {
-            console.error('Error sending program to backend:', error);
-        }
+        const response = await fetch(`${this.apiBase}/program`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                instructions: this.program,
+                currentInstructionIndex: 0
+            })
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const result = await response.json();
+        console.log('Program sent to backend:', result);
+        return result;
     }
 
     async onStartClick() {
@@ -182,30 +193,21 @@ class GameClient {
     }
 
     async getStatus() {
-        try {
-            const response = await fetch(`${this.apiBase}/state`);
-            return await response.json();
-        } catch (error) {
-            console.error('Error fetching game status:', error);
-        }
+        const response = await fetch(`${this.apiBase}/state`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.json();
     }
 
     async startGame() {
-        try {
-            const response = await fetch(`${this.apiBase}/start`, { method: 'POST' });
-            return await response.json();
-        } catch (error) {
-            console.error('Error starting game:', error);
-        }
+        const response = await fetch(`${this.apiBase}/start`, { method: 'POST' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.json();
     }
 
     async stopGame() {
-        try {
-            const response = await fetch(`${this.apiBase}/stop`, { method: 'POST' });
-            return await response.json();
-        } catch (error) {
-            console.error('Error stopping game:', error);
-        }
+        const response = await fetch(`${this.apiBase}/stop`, { method: 'POST' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return await response.json();
     }
 
     async updateGame() {

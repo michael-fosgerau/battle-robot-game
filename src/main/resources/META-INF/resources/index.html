@@ -7,42 +7,84 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <svg class="svg-container">
+        <defs>
+            <filter id="turbulent-displace" colorInterpolationFilters="sRGB" x="-20%" y="-20%" width="140%" height="140%">
+                <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise1" seed="1" />
+                <feOffset in="noise1" dx="0" dy="0" result="offsetNoise1">
+                    <animate attributeName="dy" values="700; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
+                </feOffset>
+
+                <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise2" seed="1" />
+                <feOffset in="noise2" dx="0" dy="0" result="offsetNoise2">
+                    <animate attributeName="dy" values="0; -700" dur="6s" repeatCount="indefinite" calcMode="linear" />
+                </feOffset>
+
+                <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise1" seed="2" />
+                <feOffset in="noise1" dx="0" dy="0" result="offsetNoise3">
+                    <animate attributeName="dx" values="490; 0" dur="6s" repeatCount="indefinite" calcMode="linear" />
+                </feOffset>
+
+                <feTurbulence type="turbulence" baseFrequency="0.02" numOctaves="10" result="noise2" seed="2" />
+                <feOffset in="noise2" dx="0" dy="0" result="offsetNoise4">
+                    <animate attributeName="dx" values="0; -490" dur="6s" repeatCount="indefinite" calcMode="linear" />
+                </feOffset>
+
+                <feComposite in="offsetNoise1" in2="offsetNoise2" result="part1" />
+                <feComposite in="offsetNoise3" in2="offsetNoise4" result="part2" />
+                <feBlend in="part1" in2="part2" mode="color-dodge" result="combinedNoise" />
+
+                <feDisplacementMap in="SourceGraphic" in2="combinedNoise" scale="30" xChannelSelector="R" yChannelSelector="B" />
+            </filter>
+        </defs>
+    </svg>
+
     <div id="game-container">
-        <h1>Battle Robot Game</h1>
-        <div style="display: flex; gap: 20px;">
-            <!-- Left side: Game board -->
+        <h1>⚔️ BATTLE ROBOT ARENA ⚔️</h1>
+        <div style="display: flex; gap: 30px;">
+            <!-- Left side: Game board with electric border -->
             <div style="flex: 1;">
                 <div id="controls">
-                    <button id="start-button">Start Game</button>
-                    <button id="stop-button" disabled>Stop Game</button>
+                    <button id="start-button">▶ START BATTLE</button>
+                    <button id="stop-button" disabled>⊙ STOP</button>
                 </div>
-                <div id="game-board"></div>
+
+                <!-- Arena with electric border effect -->
+                <div class="arena-wrapper">
+                    <div class="card-container">
+                        <div class="border-outer">
+                            <div id="game-board"></div>
+                        </div>
+                        <div class="glow-layer-1"></div>
+                        <div class="glow-layer-2"></div>
+                        <div class="overlay-1"></div>
+                        <div class="overlay-2"></div>
+                        <div class="background-glow"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- Right side: Programming interface -->
             <div id="programming-panel" style="flex: 1; display: flex; flex-direction: column;">
-                <h2>Robot Programming</h2>
+                <h2>🤖 ROBOT MEMORY</h2>
 
-                <!-- Available blocks -->
+                <!-- Available blocks - only 4 movement options -->
                 <div id="available-blocks-container">
-                    <h3>Available Blocks</h3>
-                    <div id="available-blocks">
-                        <div class="block-button" draggable="true" data-instruction="moveLeft">⬅️ Move Left</div>
-                        <div class="block-button" draggable="true" data-instruction="moveRight">➡️ Move Right</div>
-                        <div class="block-button" draggable="true" data-instruction="moveUp">⬆️ Move Up</div>
-                        <div class="block-button" draggable="true" data-instruction="moveDown">⬇️ Move Down</div>
+                    <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+                        <div id="available-blocks" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; flex: 1; max-width: 400px;"></div>
                     </div>
                 </div>
 
                 <!-- Program grid -->
                 <div id="program-grid-container">
-                    <h3>Robot Memory (4x4)</h3>
-                    <div id="program-grid"></div>
-                    <button id="clear-program">Clear Program</button>
+                    <h3>» INSTRUCTION SLOTS (4x4)</h3>
+                    <div id="program-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;"></div>
+                    <button id="clear-program">🗑️ CLEAR PROGRAM</button>
                 </div>
             </div>
         </div>
     </div>
+
     <script src="app.js"></script>
 </body>
 </html>
