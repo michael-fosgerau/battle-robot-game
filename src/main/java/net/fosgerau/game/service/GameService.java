@@ -28,13 +28,63 @@ public class GameService {
         // Update player robot
         String instruction = program.getNextInstruction();
         if (instruction != null) {
-            executeInstruction(playerRobot, instruction);
+            executeInstruction(playerRobot, aiRobot, program, instruction);
         }
         
         // Update AI robot with simple chase/evade logic
         updateAiRobot(playerRobot, aiRobot);
         
         gameState.setLastUpdateTime(System.currentTimeMillis());
+    }
+
+    private void executeInstruction(Robot playerRobot, Robot aiRobot, RobotProgram program, String instruction) {
+        if (instruction.equals("scan")) {
+            // Scan looks ahead to see if next instruction is a variable
+            int currentIndex = program.getCurrentInstructionIndex();
+            String nextInstruction = program.peekInstruction(currentIndex);
+            
+            if (nextInstruction != null && nextInstruction.matches("D[1-8]")) {
+                // Calculate direction to opponent (0-360 degrees)
+                int angle = calculateAngleToTarget(playerRobot, aiRobot);
+                program.setDataRegister(nextInstruction, angle);
+            }
+        } else if (instruction.matches("D[1-8]")) {
+            // Variable instruction - this is a no-op when executed
+            // It's meant to be paired with scan or other operations
+            // Just skip it
+        } else {
+            // Movement instructions
+            switch (instruction) {
+                case "moveLeft":
+                    playerRobot.moveLeft();
+                    break;
+                case "moveRight":
+                    playerRobot.moveRight();
+                    break;
+                case "moveUp":
+                    playerRobot.moveUp();
+                    break;
+                case "moveDown":
+                    playerRobot.moveDown();
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Calculate angle from player to AI robot
+     * 0° = right, 90° = down, 180° = left, 270° = up
+     */
+    private int calculateAngleToTarget(Robot player, Robot target) {
+        int dx = target.getX() - player.getX();
+        int dy = target.getY() - player.getY();
+        
+        double angle = Math.atan2(dy, dx) * 180 / Math.PI;
+        // Convert to 0-360 range
+        if (angle < 0) {
+            angle += 360;
+        }
+        return (int) Math.round(angle);
     }
 
     private void updateAiRobot(Robot playerRobot, Robot aiRobot) {
@@ -81,26 +131,6 @@ public class GameService {
                     aiRobot.moveRight();
                     break;
             }
-        }
-    }
-
-    private void executeInstruction(Robot robot, String instruction) {
-        switch (instruction) {
-            case "moveLeft":
-                robot.moveLeft();
-                break;
-            case "moveRight":
-                robot.moveRight();
-                break;
-            case "moveUp":
-                robot.moveUp();
-                break;
-            case "moveDown":
-                robot.moveDown();
-                break;
-            default:
-                // Unknown instruction, skip
-                break;
         }
     }
 

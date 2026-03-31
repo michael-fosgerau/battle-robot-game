@@ -20,7 +20,9 @@ class GameClient {
             { instruction: 'moveUp', glyph: '⬆️', label: 'Move Up', description: 'Move Up' },
             { instruction: 'moveDown', glyph: '⬇️', label: 'Move Down', description: 'Move Down' },
             { instruction: 'moveLeft', glyph: '⬅️', label: 'Move Left', description: 'Move Left' },
-            { instruction: 'moveRight', glyph: '➡️', label: 'Move Right', description: 'Move Right' }
+            { instruction: 'moveRight', glyph: '➡️', label: 'Move Right', description: 'Move Right' },
+            { instruction: 'scan', glyph: '📡', label: 'Scan', description: 'Scan' },
+            { instruction: 'D1', glyph: '🔢', label: 'Data Reg', description: 'Data Register D1' }
         ];
 
         this.init();
@@ -56,7 +58,7 @@ class GameClient {
         const container = document.getElementById('available-blocks');
         container.innerHTML = '';
 
-        // Display all 4 movement blocks
+        // Display 4 movement blocks + scan + 8 data registers
         this.blockTypes.forEach((blockType) => {
             const btn = document.createElement('div');
             btn.className = 'block-button';
@@ -67,6 +69,18 @@ class GameClient {
             btn.addEventListener('dragstart', (e) => this.onBlockDragStart(e));
             container.appendChild(btn);
         });
+
+        // Add data registers D2-D8
+        for (let i = 2; i <= 8; i++) {
+            const btn = document.createElement('div');
+            btn.className = 'block-button';
+            btn.draggable = true;
+            btn.dataset.instruction = `D${i}`;
+            btn.setAttribute('data-label', `D${i}`);
+            btn.innerHTML = `D${i}`;
+            btn.addEventListener('dragstart', (e) => this.onBlockDragStart(e));
+            container.appendChild(btn);
+        }
     }
 
     onBlockDragStart(e) {
@@ -114,9 +128,16 @@ class GameClient {
                 const instruction = this.program[index];
                 const blockType = this.blockTypes.find(b => b.instruction === instruction);
 
+                let blockContent = '';
                 if (blockType) {
-                    block.innerHTML = `<span class="glyph">${blockType.glyph}</span><span class="label">${blockType.label}</span><button class="remove-btn" data-slot="${index}">×</button>`;
+                    // Standard block type with glyph
+                    blockContent = `<span class="glyph">${blockType.glyph}</span><span class="label">${blockType.label}</span>`;
+                } else if (instruction.matches('D[1-8]')) {
+                    // Data register block - show register label
+                    blockContent = `<span class="glyph">🔢</span><span class="label">${instruction}</span>`;
                 }
+
+                block.innerHTML = `${blockContent}<button class="remove-btn" data-slot="${index}">×</button>`;
 
                 block.addEventListener('dragstart', (e) => this.onBlockDragStart(e));
                 block.querySelector('.remove-btn').addEventListener('click', (e) => {
