@@ -2,12 +2,14 @@ package net.fosgerau.game.model;
 
 public class GameState {
     private Robot playerRobot;
+    private Robot aiRobot;
     private long lastUpdateTime;
     private int moveCounter;
     private RobotProgram robotProgram;
 
     public GameState() {
         this.playerRobot = new Robot("player", 10, 10);
+        this.aiRobot = new Robot("ai", 20, 20);
         this.lastUpdateTime = System.currentTimeMillis();
         this.moveCounter = 0;
         this.robotProgram = new RobotProgram();
@@ -15,6 +17,10 @@ public class GameState {
 
     public Robot getPlayerRobot() {
         return playerRobot;
+    }
+
+    public Robot getAiRobot() {
+        return aiRobot;
     }
 
     public long getLastUpdateTime() {

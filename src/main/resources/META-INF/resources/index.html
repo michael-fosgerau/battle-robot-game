@@ -77,9 +77,72 @@
 
                 <!-- Program grid -->
                 <div id="program-grid-container">
-                    <h3>» INSTRUCTION SLOTS (4x4)</h3>
-                    <div id="program-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;"></div>
+                    <h3>» ROBOT PROGRAMMABLE MEMORY</h3>
+                    <div id="program-grid" style="display: grid; grid-template-columns: repeat(4, 58px); gap: 2px; width: fit-content;"></div>
                     <button id="clear-program">🗑️ CLEAR PROGRAM</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Panel at the bottom -->
+        <div id="stats-panel">
+            <div class="stats-section">
+                <div class="stats-title">🎮 PLAYER ROBOT</div>
+                <div class="stats-bars">
+                    <div class="stat-row">
+                        <span class="stat-label">⚡ BATTERY:</span>
+                        <div class="stat-bar-container">
+                            <div id="player-stats" class="stat-value">
+                                <div class="battery-bar" style="width: 100%;">100%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">❤️ HEALTH:</span>
+                        <div class="stat-bar-container">
+                            <div id="player-stats" class="stat-value">
+                                <div class="health-bar" style="width: 100%;">100%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">💣 AMMO:</span>
+                        <div class="stat-bar-container">
+                            <div id="player-stats" class="stat-value">
+                                <div class="ammo-bar" style="width: 100%;">100%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stats-title">🤠 OPPONENT AI ROBOT</div>
+                <div class="stats-bars">
+                    <div class="stat-row">
+                        <span class="stat-label">⚡ BATTERY:</span>
+                        <div class="stat-bar-container">
+                            <div id="ai-stats" class="stat-value">
+                                <div class="battery-bar" style="width: 100%;">100%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">❤️ HEALTH:</span>
+                        <div class="stat-bar-container">
+                            <div id="ai-stats" class="stat-value">
+                                <div class="health-bar" style="width: 100%;">100%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">💣 AMMO:</span>
+                        <div class="stat-bar-container">
+                            <div id="ai-stats" class="stat-value">
+                                <div class="ammo-bar" style="width: 100%;">100%</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

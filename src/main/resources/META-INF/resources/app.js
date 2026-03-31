@@ -9,7 +9,8 @@ class GameClient {
         this.clearProgramBtn = document.getElementById('clear-program');
         this.gameRunning = false;
         this.pollInterval = null;
-        this.robotElement = null;
+        this.playerRobotElement = null;
+        this.aiRobotElement = null;
         this.gridSize = 4; // 4x4 memory grid
         this.program = new Array(this.gridSize * this.gridSize).fill(null);
         this.draggedBlock = null;
@@ -167,7 +168,8 @@ class GameClient {
             const result = await this.startGame();
             console.log('Game started:', result);
             this.gameRunning = true;
-            this.renderRobot(result.robot);
+            this.renderRobots(result.robot, result.opponentRobot);
+            this.updateStats(result.robot, result.opponentRobot);
             this.startPolling();
         } catch (error) {
             console.error('Error starting game:', error);
@@ -186,7 +188,8 @@ class GameClient {
         try {
             const result = await this.stopGame();
             console.log('Game stopped:', result);
-            this.renderRobot(result.robot);
+            this.renderRobots(result.robot, result.opponentRobot);
+            this.updateStats(result.robot, result.opponentRobot);
         } catch (error) {
             console.error('Error stopping game:', error);
         }
@@ -226,9 +229,8 @@ class GameClient {
             const state = await this.updateGame();
             if (state) {
                 console.log('Game state updated:', state);
-                this.renderRobot(state.robot);
-                // Update program from backend only if instruction pointer changed (for UI feedback)
-                // Don't overwrite user's program arrangement
+                this.renderRobots(state.robot, state.opponentRobot);
+                this.updateStats(state.robot, state.opponentRobot);
                 console.log('Current instruction index:', state.program.currentInstructionIndex);
             }
         }, 500); // Update every 500ms
@@ -242,11 +244,23 @@ class GameClient {
         }
     }
 
-    renderRobot(robot) {
-        if (!this.robotElement) {
-            this.robotElement = document.createElement('div');
-            this.robotElement.className = 'robot';
-            this.gameBoard.appendChild(this.robotElement);
+    renderRobots(playerRobot, aiRobot) {
+        this.renderRobot(playerRobot, true);
+        this.renderRobot(aiRobot, false);
+    }
+
+    renderRobot(robot, isPlayer) {
+        let element = isPlayer ? this.playerRobotElement : this.aiRobotElement;
+
+        if (!element) {
+            element = document.createElement('div');
+            element.className = isPlayer ? 'robot player-robot' : 'robot ai-robot';
+            this.gameBoard.appendChild(element);
+            if (isPlayer) {
+                this.playerRobotElement = element;
+            } else {
+                this.aiRobotElement = element;
+            }
         }
 
         // Calculate position on the board
@@ -255,10 +269,46 @@ class GameClient {
         const x = robot.x * cellSize;
         const y = robot.y * cellSize;
 
-        this.robotElement.style.left = x + 'px';
-        this.robotElement.style.top = y + 'px';
+        element.style.left = x + 'px';
+        element.style.top = y + 'px';
 
-        console.log(`Robot rendered at (${robot.x}, ${robot.y}) -> pixel (${x}, ${y})`);
+        console.log(`${isPlayer ? 'Player' : 'AI'} robot rendered at (${robot.x}, ${robot.y}) -> pixel (${x}, ${y})`);
+    }
+
+    updateStats(playerRobot, aiRobot) {
+        this.updateRobotStats('player', playerRobot);
+        this.updateRobotStats('ai', aiRobot);
+    }
+
+    updateRobotStats(robotType, robot) {
+        const statsPanelId = `${robotType}-stats`;
+        let statsPanel = document.getElementById(statsPanelId);
+
+        if (!statsPanel) {
+            console.error(`Stats panel not found: ${statsPanelId}`);
+            return;
+        }
+
+        // Update battery
+        const batteryBar = statsPanel.querySelector('.battery-bar');
+        if (batteryBar) {
+            batteryBar.style.width = robot.battery + '%';
+            batteryBar.textContent = robot.battery + '%';
+        }
+
+        // Update health (structural integrity)
+        const healthBar = statsPanel.querySelector('.health-bar');
+        if (healthBar) {
+            healthBar.style.width = robot.structuralIntegrity + '%';
+            healthBar.textContent = robot.structuralIntegrity + '%';
+        }
+
+        // Update ammo
+        const ammoBar = statsPanel.querySelector('.ammo-bar');
+        if (ammoBar) {
+            ammoBar.style.width = robot.ammo + '%';
+            ammoBar.textContent = robot.ammo + '%';
+        }
     }
 }
 
@@ -267,4 +317,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.gameClient = new GameClient();
     console.log('Battle Robot Game - Ready');
 });
+
+
 

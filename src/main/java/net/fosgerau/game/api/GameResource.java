@@ -25,13 +25,17 @@ public class GameResource {
     @Path("/state")
     public GameStateDto getGameState() {
         GameState state = gameService.getGameState();
-        Robot robot = state.getPlayerRobot();
+        Robot playerRobot = state.getPlayerRobot();
+        Robot aiRobot = state.getAiRobot();
         RobotProgram program = state.getRobotProgram();
         
-        RobotDto robotDto = new RobotDto(robot.getId(), robot.getX(), robot.getY());
+        RobotDto playerDto = new RobotDto(playerRobot.getId(), playerRobot.getX(), playerRobot.getY(),
+                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
+        RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
+                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
         RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
         
-        return new GameStateDto(robotDto, state.getLastUpdateTime(), programDto);
+        return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
     }
 
     @POST
@@ -39,13 +43,17 @@ public class GameResource {
     public GameStateDto updateGame() {
         gameService.updateRobotPosition();
         GameState state = gameService.getGameState();
-        Robot robot = state.getPlayerRobot();
+        Robot playerRobot = state.getPlayerRobot();
+        Robot aiRobot = state.getAiRobot();
         RobotProgram program = state.getRobotProgram();
         
-        RobotDto robotDto = new RobotDto(robot.getId(), robot.getX(), robot.getY());
+        RobotDto playerDto = new RobotDto(playerRobot.getId(), playerRobot.getX(), playerRobot.getY(),
+                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
+        RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
+                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
         RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
         
-        return new GameStateDto(robotDto, state.getLastUpdateTime(), programDto);
+        return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
     }
 
     @POST
@@ -53,13 +61,17 @@ public class GameResource {
     public GameStateDto setProgram(RobotProgramDto programDto) {
         gameService.setRobotProgram(programDto.instructions);
         GameState state = gameService.getGameState();
-        Robot robot = state.getPlayerRobot();
+        Robot playerRobot = state.getPlayerRobot();
+        Robot aiRobot = state.getAiRobot();
         RobotProgram program = state.getRobotProgram();
         
-        RobotDto robotDto = new RobotDto(robot.getId(), robot.getX(), robot.getY());
+        RobotDto playerDto = new RobotDto(playerRobot.getId(), playerRobot.getX(), playerRobot.getY(),
+                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
+        RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
+                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
         RobotProgramDto result = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
         
-        return new GameStateDto(robotDto, state.getLastUpdateTime(), result);
+        return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), result);
     }
 
     @POST
@@ -68,13 +80,17 @@ public class GameResource {
         // Reset robot position and instruction pointer, but keep the existing program
         gameService.stopGame();
         GameState state = gameService.getGameState();
-        Robot robot = state.getPlayerRobot();
+        Robot playerRobot = state.getPlayerRobot();
+        Robot aiRobot = state.getAiRobot();
         RobotProgram program = state.getRobotProgram();
         
-        RobotDto robotDto = new RobotDto(robot.getId(), robot.getX(), robot.getY());
+        RobotDto playerDto = new RobotDto(playerRobot.getId(), playerRobot.getX(), playerRobot.getY(),
+                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
+        RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
+                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
         RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
         
-        return new GameStateDto(robotDto, state.getLastUpdateTime(), programDto);
+        return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
     }
 
     @POST
@@ -82,13 +98,17 @@ public class GameResource {
     public GameStateDto stopGame() {
         gameService.stopGame();
         GameState state = gameService.getGameState();
-        Robot robot = state.getPlayerRobot();
+        Robot playerRobot = state.getPlayerRobot();
+        Robot aiRobot = state.getAiRobot();
         RobotProgram program = state.getRobotProgram();
         
-        RobotDto robotDto = new RobotDto(robot.getId(), robot.getX(), robot.getY());
+        RobotDto playerDto = new RobotDto(playerRobot.getId(), playerRobot.getX(), playerRobot.getY(),
+                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
+        RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
+                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
         RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
         
-        return new GameStateDto(robotDto, state.getLastUpdateTime(), programDto);
+        return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
     }
 
 }

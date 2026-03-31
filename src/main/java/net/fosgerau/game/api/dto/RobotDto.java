@@ -4,6 +4,9 @@ public class RobotDto {
     public String id;
     public int x;
     public int y;
+    public int battery;
+    public int structuralIntegrity;
+    public int ammo;
 
     public RobotDto() {
     }
@@ -12,6 +15,18 @@ public class RobotDto {
         this.id = id;
         this.x = x;
         this.y = y;
+        this.battery = 100;
+        this.structuralIntegrity = 100;
+        this.ammo = 100;
+    }
+
+    public RobotDto(String id, int x, int y, int battery, int structuralIntegrity, int ammo) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.battery = battery;
+        this.structuralIntegrity = structuralIntegrity;
+        this.ammo = ammo;
     }
 }
 
