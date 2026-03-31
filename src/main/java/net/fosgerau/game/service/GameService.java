@@ -48,12 +48,17 @@ public class GameService {
                 int angle = calculateAngleToTarget(playerRobot, aiRobot);
                 program.setDataRegister(nextInstruction, angle);
             }
+            
+            // Set scan active flag for UI animation
+            program.setScanActive(true);
         } else if (instruction.matches("D[1-8]")) {
             // Variable instruction - this is a no-op when executed
             // It's meant to be paired with scan or other operations
             // Just skip it
+            program.setScanActive(false);
         } else {
             // Movement instructions
+            program.setScanActive(false);
             switch (instruction) {
                 case "moveLeft":
                     playerRobot.moveLeft();

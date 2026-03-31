@@ -33,7 +33,7 @@ public class GameResource {
                 playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
         RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
                 aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
-        RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
+        RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex(), program.isScanActive());
         
         return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
     }
@@ -51,7 +51,7 @@ public class GameResource {
                 playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
         RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
                 aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
-        RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
+        RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex(), program.isScanActive());
         
         return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
     }
@@ -69,7 +69,7 @@ public class GameResource {
                 playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
         RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
                 aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
-        RobotProgramDto result = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
+        RobotProgramDto result = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex(), program.isScanActive());
         
         return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), result);
     }
@@ -88,7 +88,7 @@ public class GameResource {
                 playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
         RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
                 aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
-        RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
+        RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex(), program.isScanActive());
         
         return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
     }
@@ -106,7 +106,7 @@ public class GameResource {
                 playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
         RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
                 aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
-        RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex());
+        RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex(), program.isScanActive());
         
         return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
     }

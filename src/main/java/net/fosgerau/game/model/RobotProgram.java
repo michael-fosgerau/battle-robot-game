@@ -10,6 +10,7 @@ public class RobotProgram {
     private String[] instructions;
     private int currentInstructionIndex;
     private Map<String, Integer> dataRegisters; // D1, D2, D3, etc. store angle values (0-360)
+    private boolean scanActive; // Flag to indicate a scan just occurred
 
     public RobotProgram() {
         this.instructions = new String[TOTAL_SLOTS];
@@ -83,6 +84,7 @@ public class RobotProgram {
 
     public void reset() {
         currentInstructionIndex = 0;
+        scanActive = false;
         // Reset all data registers to 0
         for (int i = 1; i <= 8; i++) {
             this.dataRegisters.put("D" + i, 0);
@@ -116,6 +118,14 @@ public class RobotProgram {
             return instructions[slotIndex];
         }
         return null;
+    }
+
+    public boolean isScanActive() {
+        return scanActive;
+    }
+
+    public void setScanActive(boolean active) {
+        this.scanActive = active;
     }
 }
 

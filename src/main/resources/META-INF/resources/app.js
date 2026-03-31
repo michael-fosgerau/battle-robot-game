@@ -252,9 +252,38 @@ class GameClient {
                 console.log('Game state updated:', state);
                 this.renderRobots(state.robot, state.opponentRobot);
                 this.updateStats(state.robot, state.opponentRobot);
+
+                // Handle scan ping effect
+                if (state.program.scanActive) {
+                    this.createScanPing(state.robot);
+                }
+
                 console.log('Current instruction index:', state.program.currentInstructionIndex);
             }
         }, 500); // Update every 500ms
+    }
+
+    createScanPing(playerRobot) {
+        // Calculate robot position in pixels
+        const cellSize = 20;
+        const x = playerRobot.x * cellSize + cellSize / 2;
+        const y = playerRobot.y * cellSize + cellSize / 2;
+
+        // Create ping element
+        const ping = document.createElement('div');
+        ping.className = 'scan-ping';
+        ping.style.left = x + 'px';
+        ping.style.top = y + 'px';
+
+        // Add to game board
+        this.gameBoard.appendChild(ping);
+
+        // Remove after animation completes
+        setTimeout(() => {
+            ping.remove();
+        }, 800);
+
+        console.log(`Scan ping created at (${playerRobot.x}, ${playerRobot.y})`);
     }
 
     stopPolling() {

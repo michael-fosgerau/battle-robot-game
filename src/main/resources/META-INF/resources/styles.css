@@ -761,4 +761,34 @@ body {
         inset 0 0 5px rgba(255, 255, 255, 0.3) !important;
 }
 
+/* Scan ping effect */
+#game-board {
+    position: relative;
+    overflow: hidden;
+}
+
+.scan-ping {
+    position: absolute;
+    border: 2px solid #00ffff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffaa;
+    pointer-events: none;
+    animation: pingWave 0.8s ease-out forwards;
+}
+
+@keyframes pingWave {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+        transform: translate(-50%, -50%);
+    }
+}
+
 
