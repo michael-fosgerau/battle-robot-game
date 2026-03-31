@@ -1,12 +1,17 @@
 package net.fosgerau.game.model;
 
 public class Robot {
+    private static final int ARENA_SIZE = 30; // 30x30 grid (0-29)
+    private static final int MIN_COORD = 0;
+    private static final int MAX_COORD = ARENA_SIZE - 1;
+    
     private int x;
     private int y;
     private String id;
     private int battery; // 0-100
     private int structuralIntegrity; // 0-100 (health)
     private int ammo; // 0-100
+    private boolean boundaryHit; // Flag set when robot hits boundary
 
     public Robot(String id, int startX, int startY) {
         this.id = id;
@@ -15,6 +20,7 @@ public class Robot {
         this.battery = 100;
         this.structuralIntegrity = 100;
         this.ammo = 100;
+        this.boundaryHit = false;
     }
 
     public int getX() {
@@ -22,7 +28,7 @@ public class Robot {
     }
 
     public void setX(int x) {
-        this.x = x;
+        this.x = Math.max(MIN_COORD, Math.min(MAX_COORD, x));
     }
 
     public int getY() {
@@ -30,7 +36,7 @@ public class Robot {
     }
 
     public void setY(int y) {
-        this.y = y;
+        this.y = Math.max(MIN_COORD, Math.min(MAX_COORD, y));
     }
 
     public String getId() {
@@ -61,24 +67,56 @@ public class Robot {
         this.ammo = Math.max(0, Math.min(100, ammo));
     }
 
+    public boolean isBoundaryHit() {
+        return boundaryHit;
+    }
+
+    public void setBoundaryHit(boolean hit) {
+        this.boundaryHit = hit;
+    }
+
     public void moveLeft() {
-        this.x -= 1;
-        consumeBattery(5);
+        int newX = this.x - 1;
+        if (newX < MIN_COORD) {
+            this.boundaryHit = true;
+        } else {
+            this.x = newX;
+            this.boundaryHit = false;
+            consumeBattery(5);
+        }
     }
 
     public void moveRight() {
-        this.x += 1;
-        consumeBattery(5);
+        int newX = this.x + 1;
+        if (newX > MAX_COORD) {
+            this.boundaryHit = true;
+        } else {
+            this.x = newX;
+            this.boundaryHit = false;
+            consumeBattery(5);
+        }
     }
 
     public void moveUp() {
-        this.y -= 1;
-        consumeBattery(5);
+        int newY = this.y - 1;
+        if (newY < MIN_COORD) {
+            this.boundaryHit = true;
+        } else {
+            this.y = newY;
+            this.boundaryHit = false;
+            consumeBattery(5);
+        }
     }
 
     public void moveDown() {
-        this.y += 1;
-        consumeBattery(5);
+        int newY = this.y + 1;
+        if (newY > MAX_COORD) {
+            this.boundaryHit = true;
+        } else {
+            this.y = newY;
+            this.boundaryHit = false;
+            consumeBattery(5);
+        }
     }
 
     private void consumeBattery(int amount) {
@@ -89,6 +127,7 @@ public class Robot {
         this.battery = 100;
         this.structuralIntegrity = 100;
         this.ammo = 100;
+        this.boundaryHit = false;
     }
 }
 

@@ -322,6 +322,15 @@ class GameClient {
         element.style.left = x + 'px';
         element.style.top = y + 'px';
 
+        // Handle boundary hit visual effect
+        if (robot.boundaryHit) {
+            element.classList.add('boundary-hit');
+            // Remove the class after animation completes
+            setTimeout(() => {
+                element.classList.remove('boundary-hit');
+            }, 400);
+        }
+
         console.log(`${isPlayer ? 'Player' : 'AI'} robot rendered at (${robot.x}, ${robot.y}) -> pixel (${x}, ${y})`);
     }
 

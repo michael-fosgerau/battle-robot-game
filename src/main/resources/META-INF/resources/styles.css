@@ -122,6 +122,39 @@ button:disabled {
     z-index: 10;
 }
 
+.robot.player-robot {
+    background: radial-gradient(circle at 30% 30%, #00ff00, #00aa00);
+    border-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00, inset 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.robot.ai-robot {
+    background: radial-gradient(circle at 30% 30%, #0088ff, #0066aa);
+    border-color: #0088ff;
+    box-shadow: 0 0 10px #0088ff, inset 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.robot.boundary-hit {
+    background: radial-gradient(circle at 30% 30%, #ff3333, #cc0000) !important;
+    border-color: #ff0000 !important;
+    box-shadow: 0 0 15px #ff0000, inset 0 0 5px rgba(255, 255, 255, 0.3) !important;
+    animation: robotShake 0.4s ease-in-out;
+}
+
+@keyframes robotShake {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-3px, -3px); }
+    20% { transform: translate(3px, 3px); }
+    30% { transform: translate(-3px, 3px); }
+    40% { transform: translate(3px, -3px); }
+    50% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    70% { transform: translate(-2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    90% { transform: translate(-1px, 1px); }
+    100% { transform: translate(0, 0); }
+}
+
 /* Programming Panel */
 #programming-panel {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -752,14 +785,6 @@ body {
     transition: width 0.3s ease;
 }
 
-/* AI Robot styling - different appearance from player */
-.ai-robot {
-    background: radial-gradient(circle at 30% 30%, #ff6600, #ff3300) !important;
-    border-color: #ff6600 !important;
-    box-shadow:
-        0 0 10px #ff6600,
-        inset 0 0 5px rgba(255, 255, 255, 0.3) !important;
-}
 
 /* Scan ping effect */
 #game-board {

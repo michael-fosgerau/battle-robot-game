@@ -30,9 +30,9 @@ public class GameResource {
         RobotProgram program = state.getRobotProgram();
         
         RobotDto playerDto = new RobotDto(playerRobot.getId(), playerRobot.getX(), playerRobot.getY(),
-                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
+                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo(), playerRobot.isBoundaryHit());
         RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
-                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
+                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo(), aiRobot.isBoundaryHit());
         RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex(), program.isScanActive());
         
         return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
@@ -48,9 +48,9 @@ public class GameResource {
         RobotProgram program = state.getRobotProgram();
         
         RobotDto playerDto = new RobotDto(playerRobot.getId(), playerRobot.getX(), playerRobot.getY(),
-                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo());
+                playerRobot.getBattery(), playerRobot.getStructuralIntegrity(), playerRobot.getAmmo(), playerRobot.isBoundaryHit());
         RobotDto aiDto = new RobotDto(aiRobot.getId(), aiRobot.getX(), aiRobot.getY(),
-                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo());
+                aiRobot.getBattery(), aiRobot.getStructuralIntegrity(), aiRobot.getAmmo(), aiRobot.isBoundaryHit());
         RobotProgramDto programDto = new RobotProgramDto(program.getInstructions(), program.getCurrentInstructionIndex(), program.isScanActive());
         
         return new GameStateDto(playerDto, aiDto, state.getLastUpdateTime(), programDto);
