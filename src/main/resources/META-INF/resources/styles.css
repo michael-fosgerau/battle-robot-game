@@ -184,6 +184,7 @@ button:disabled {
     width: 54px;
     height: 54px;
     padding: 0;
+    margin-bottom: 30px;
     background: linear-gradient(135deg, #00ff00 0%, #00aa00 100%);
     color: #000000;
     border: 2px solid #00ff00;

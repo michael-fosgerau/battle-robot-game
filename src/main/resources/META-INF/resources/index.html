@@ -41,16 +41,16 @@
 
     <div id="game-container">
         <h1>⚔️ BATTLE ROBOT ARENA ⚔️</h1>
-        <div style="display: flex; gap: 30px;">
+        <div id="main-layout" style="display: flex; gap: 30px;">
             <!-- Left side: Game board with electric border -->
-            <div style="flex: 1;">
+            <div id="game-arena-section" style="flex: 1;">
                 <div id="controls">
                     <button id="start-button">▶ START BATTLE</button>
                     <button id="stop-button" disabled>⊙ STOP</button>
                 </div>
 
                 <!-- Arena with electric border effect -->
-                <div class="arena-wrapper">
+                <div id="arena-wrapper" class="arena-wrapper">
                     <div class="card-container">
                         <div class="border-outer">
                             <div id="game-board"></div>
@@ -70,7 +70,7 @@
 
                 <!-- Available blocks - only 4 movement options -->
                 <div id="available-blocks-container">
-                    <div style="display: flex; align-items: center; gap: 10px; justify-content: center;">
+                    <div id="available-blocks-wrapper" style="display: flex; align-items: center; gap: 10px; justify-content: center;">
                         <div id="available-blocks" style="display: grid; grid-template-columns: repeat(12, 1fr); gap: 12px; flex: 1; max-width: 400px;"></div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
 
         <!-- Stats Panel at the bottom -->
         <div id="stats-panel">
-            <div class="stats-section">
+            <div id="player-stats-section" class="stats-section">
                 <div class="stats-title">🎮 PLAYER ROBOT</div>
                 <div class="stats-bars">
                     <div class="stat-row">
@@ -116,7 +116,7 @@
                 </div>
             </div>
 
-            <div class="stats-section">
+            <div id="ai-stats-section" class="stats-section">
                 <div class="stats-title">🤠 OPPONENT AI ROBOT</div>
                 <div class="stats-bars">
                     <div class="stat-row">

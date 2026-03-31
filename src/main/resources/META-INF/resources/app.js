@@ -21,8 +21,7 @@ class GameClient {
             { instruction: 'moveDown', glyph: '⬇️', label: 'Move Down', description: 'Move Down' },
             { instruction: 'moveLeft', glyph: '⬅️', label: 'Move Left', description: 'Move Left' },
             { instruction: 'moveRight', glyph: '➡️', label: 'Move Right', description: 'Move Right' },
-            { instruction: 'scan', glyph: '📡', label: 'Scan', description: 'Scan' },
-            { instruction: 'D1', glyph: '🔢', label: 'Data Reg', description: 'Data Register D1' }
+            { instruction: 'scan', glyph: '📡', label: 'Scan', description: 'Scan' }
         ];
 
         this.init();
@@ -58,7 +57,7 @@ class GameClient {
         const container = document.getElementById('available-blocks');
         container.innerHTML = '';
 
-        // Display 4 movement blocks + scan + 8 data registers
+        // Display all standard blocks (4 movements + scan)
         this.blockTypes.forEach((blockType) => {
             const btn = document.createElement('div');
             btn.className = 'block-button';
@@ -70,8 +69,8 @@ class GameClient {
             container.appendChild(btn);
         });
 
-        // Add data registers D2-D8
-        for (let i = 2; i <= 8; i++) {
+        // Add data registers D1-D8
+        for (let i = 1; i <= 8; i++) {
             const btn = document.createElement('div');
             btn.className = 'block-button';
             btn.draggable = true;
